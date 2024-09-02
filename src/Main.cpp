@@ -8,18 +8,19 @@ int main() {
     // Input initialize
     std::vector<std::vector<float>> inputs;
     inputs.push_back(std::vector<float>(1, 1));
-    inputs.push_back(std::vector<float>(1, 2));
+    inputs.push_back(std::vector<float>(1, 5));
+    inputs.push_back(std::vector<float>(1, 13));
 
     std::vector<std::vector<float>> labels;
-    labels.push_back(std::vector<float>(1, 2));
+    labels.push_back(std::vector<float>(1, 3));
     labels.push_back(std::vector<float>(1, 4));
+    labels.push_back(std::vector<float>(1, 51));
 
     float decay = 1;
-    for (unsigned int epoch = 0; epoch < 101; epoch++) {
-        linear.train(inputs, labels, 0.08);
-        std::cout << linear.loss(inputs, labels) << std::endl;
+    for (unsigned int epoch = 0; epoch < 800; epoch++) {
+        linear.train(inputs, labels, 0.015);
+        
     }
     std::cout << linear.to_string();
-    std::cout << linear.getOutputs() << std::endl;
     return 0;
 }
