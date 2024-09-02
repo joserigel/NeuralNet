@@ -66,7 +66,7 @@ float Linear::loss(
             result += distance;
         }
     }
-    return result;
+    return result / batchSize;
     
 }
 
