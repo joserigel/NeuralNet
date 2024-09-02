@@ -3,8 +3,7 @@
 #include <string>
 
 int main() {
-    Linear linear(10, 3);
-    std::cout << linear.to_string();
-    std::cout << linear.feed(std::vector<float>(10))[0];
+    Linear linear(1, 3);
+    std::cout << linear.getInputs() << ":" << linear.getOutputs() << std::endl;    
     return 0;
 }
