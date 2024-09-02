@@ -11,6 +11,10 @@ class Linear: public Layer {
         unsigned int getInputs();
         unsigned int getOutputs();
 
+        float loss(
+            std::vector<std::vector<float>> inputs, 
+            std::vector<std::vector<float>> labels
+        );
         std::string to_string();
         std::vector<float> feed(std::vector<float> input);
         void train(
