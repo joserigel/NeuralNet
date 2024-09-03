@@ -1,7 +1,10 @@
+#ifndef Layer_H
+#define Layer_H
 #include <vector>
 
 
 class Layer {
     public:
-        std::vector<float> feed(std::vector<float> input);
+        virtual std::vector<float> feed(std::vector<float> input) = 0;
 };
+#endif

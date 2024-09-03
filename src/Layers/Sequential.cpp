@@ -1,18 +1,13 @@
-#include "Layer.h"
-#include <vector>
-class Sequential: Layer {
-    public:
-        std::vector<Layer> layers;
+#include "Sequential.h"
 
-    Sequential(std::vector<Layer> layers) {
-        this->layers = layers;
-    }
+Sequential::Sequential(std::vector<Layer*>& layers) {
+    this->layers = &layers;
+}
     
-    std::vector<float> feed(std::vector<float> inputs) {
-        std::vector<float> result = inputs;
-        for (std::vector<Layer>::iterator iter = layers.begin(); iter < layers.end(); iter++) {
-            result = iter->feed(result);
-        }
-        return result;
+std::vector<float> Sequential::feed(std::vector<float> inputs) {
+    std::vector<float> result = inputs;
+    for (std::vector<Layer*>::iterator iter = (*layers).begin(); iter < (*layers).end(); iter++) {
+        result = (*iter)->feed(result);
     }
-};
+    return result;
+}

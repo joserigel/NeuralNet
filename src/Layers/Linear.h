@@ -1,4 +1,6 @@
-#include "Layer.h"
+#ifndef Layer_H
+    #include "Layer.h"
+#endif
 
 #include <vector>
 #include <string>
@@ -16,7 +18,7 @@ class Linear: public Layer {
             std::vector<std::vector<float>> labels
         );
         std::string to_string();
-        std::vector<float> feed(std::vector<float> input);
+        std::vector<float> feed(std::vector<float> input) override;
         void train(
             std::vector<std::vector<float>> inputs, 
             std::vector<std::vector<float>> labels, 
