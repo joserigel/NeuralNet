@@ -28,3 +28,7 @@ float Division::partialAndEval(Variable* var, std::map<Variable*, float> interpr
 float Division::eval(std::map<Variable*, float> interpretation) {
     return numerator->eval(interpretation) / denominator->eval(interpretation);
 }
+
+Expression* Division::replace(Variable* var, Expression* substitute) {
+    return new Division(numerator->replace(var, substitute), denominator->replace(var, substitute));
+}

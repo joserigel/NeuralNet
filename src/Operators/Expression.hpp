@@ -16,6 +16,7 @@ class Expression {
         virtual std::string to_string() = 0;
         virtual float eval(std::map<Variable*, float> interpretation) = 0;
         virtual float partialAndEval(Variable* var, std::map<Variable*, float> interpretation) = 0;
+        virtual Expression* replace(Variable* var, Expression* substitute) = 0;
 };
 
 class Variable: public Expression {
@@ -26,6 +27,7 @@ class Variable: public Expression {
         std::string to_string() override;
         float partialAndEval(Variable* var, std::map<Variable*, float> interpretation) override;
         float eval(std::map<Variable*, float> interpretation) override;
+        Expression* replace(Variable* var, Expression* substitute) override;
         Variable(std::string name);
 };
 
@@ -37,6 +39,7 @@ class Constant: public Expression {
         std::string to_string() override;
         float partialAndEval(Variable* var, std::map<Variable*, float> interpretation) override;
         float eval(std::map<Variable*, float> interpretation) override;
+        Expression* replace(Variable* var, Expression* substitute) override;
         Constant(float value);
 };
 
@@ -49,6 +52,7 @@ class Addition: public Expression {
         std::string to_string() override;
         float partialAndEval(Variable* var, std::map<Variable*, float> interpretation) override;
         float eval(std::map<Variable*, float> interpretation) override;
+        Expression* replace(Variable* var, Expression* substitute) override;
         Addition(Expression* left, Expression* right);
 
 };
@@ -62,6 +66,7 @@ class Multiplication: public Expression {
         std::string to_string() override;
         float partialAndEval(Variable* var, std::map<Variable*, float> interpretation) override;
         float eval(std::map<Variable*, float> interpretation) override;
+        Expression* replace(Variable* var, Expression* substitute) override;
         Multiplication(Expression* left, Expression* right);
 };
 
@@ -74,6 +79,7 @@ class Division: public Expression {
         std::string to_string() override;
         float partialAndEval(Variable* var, std::map<Variable*, float> interpretation) override;
         float eval(std::map<Variable*, float> interpretation) override;
+        Expression* replace(Variable* var, Expression* substitute) override;
         Division(Expression* numerator, Expression* denominator);
 };
 
@@ -86,6 +92,7 @@ class Power: public Expression {
         std::string to_string() override;
         float partialAndEval(Variable* var, std::map<Variable*, float> interpretation) override;
         float eval(std::map<Variable*, float> interpretation) override;
+        Expression* replace(Variable* var, Expression* substitute) override;
         Power(Expression* base, Expression* exponent);
 };
 

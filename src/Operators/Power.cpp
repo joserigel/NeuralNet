@@ -28,3 +28,7 @@ float Power::partialAndEval(Variable* var, std::map<Variable*, float> interpreta
 float Power::eval(std::map<Variable*, float> interpretation) {
     return std::pow(base->eval(interpretation), exponent->eval(interpretation));
 }
+
+Expression* Power::replace(Variable* var, Expression* substitute) {
+    return new Power(base->replace(var, substitute), exponent->replace(var, substitute));
+}

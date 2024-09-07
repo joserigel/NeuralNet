@@ -30,6 +30,14 @@ float Variable::partialAndEval(Variable* var, std::map<Variable*, float> interpr
     }
 }
 
+Expression* Variable::replace(Variable* var, Expression* substitute) {
+    if (var == this) {
+        return substitute;
+    } else {
+        return this;
+    }
+}
+
 Constant::Constant(float value) {
     this->value = value;
 }
@@ -48,4 +56,8 @@ float Constant::partialAndEval(Variable* var, std::map<Variable*, float> interpr
 
 float Constant::eval(std::map<Variable*, float> interpretation) {
     return this->value;
+}
+
+Expression* Constant::replace(Variable* var, Expression* substitute) {
+    return new Constant(this->value);
 }

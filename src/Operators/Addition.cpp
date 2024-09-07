@@ -23,3 +23,7 @@ float Addition::partialAndEval(Variable* var, std::map<Variable*, float> interpr
 float Addition::eval(std::map<Variable*, float> interpretation) {
     return left->eval(interpretation) + right->eval(interpretation);
 }
+
+Expression* Addition::replace(Variable* var, Expression* substitute) {
+    return new Addition(left->replace(var, substitute), right->replace(var, substitute));
+}

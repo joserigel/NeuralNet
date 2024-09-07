@@ -27,3 +27,7 @@ float Multiplication::partialAndEval(Variable* var, std::map<Variable*, float> i
 float Multiplication::eval(std::map<Variable*, float> interpretation) {
     return left->eval(interpretation) * right->eval(interpretation);
 }
+
+Expression* Multiplication::replace(Variable* var, Expression* substitute) {
+    return new Multiplication(left->replace(var, substitute), right->replace(var, substitute));
+}
