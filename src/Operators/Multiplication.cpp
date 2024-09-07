@@ -16,6 +16,14 @@ std::set<Variable*> Multiplication::getVariables() {
     return a;
 }
 
+float Multiplication::partialAndEval(Variable* var, std::map<Variable*, float> interpretation) {
+    const float leftEval = left->eval(interpretation);
+    const float leftDerivedEval = left->partialAndEval(var, interpretation);
+    const float rightEval = right->eval(interpretation);
+    const float rightDerivedEval = right->partialAndEval(var, interpretation);
+    return (leftEval * rightDerivedEval) + (rightEval * leftDerivedEval);
+}
+
 float Multiplication::eval(std::map<Variable*, float> interpretation) {
     return left->eval(interpretation) * right->eval(interpretation);
 }

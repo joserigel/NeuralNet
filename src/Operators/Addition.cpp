@@ -16,6 +16,10 @@ std::set<Variable*> Addition::getVariables() {
     return a;
 }
 
+float Addition::partialAndEval(Variable* var, std::map<Variable*, float> interpretation) {
+    return left->partialAndEval(var, interpretation) + right->partialAndEval(var, interpretation);
+}
+
 float Addition::eval(std::map<Variable*, float> interpretation) {
     return left->eval(interpretation) + right->eval(interpretation);
 }

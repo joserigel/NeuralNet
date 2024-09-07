@@ -22,6 +22,14 @@ float Variable::eval(std::map<Variable*, float> interpretation) {
     }
 }
 
+float Variable::partialAndEval(Variable* var, std::map<Variable*, float> interpretation) {
+    if (var == this) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 Constant::Constant(float value) {
     this->value = value;
 }
@@ -32,6 +40,10 @@ std::string Constant::to_string() {
 
 std::set<Variable*> Constant::getVariables() {
     return std::set<Variable*>();
+}
+
+float Constant::partialAndEval(Variable* var, std::map<Variable*, float> interpretation) {
+    return 0;
 }
 
 float Constant::eval(std::map<Variable*, float> interpretation) {

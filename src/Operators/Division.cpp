@@ -16,6 +16,15 @@ std::set<Variable*> Division::getVariables() {
     return a;
 }
 
+float Division::partialAndEval(Variable* var, std::map<Variable*, float> interpretation) {
+    const float numeratorEval = numerator->eval(interpretation);
+    const float denominatorEval = denominator->eval(interpretation);
+    const float numeratorDerived = numerator->partialAndEval(var, interpretation);
+    const float denominatorDerived = denominator->partialAndEval(var, interpretation);
+    return ((denominatorEval * numeratorDerived) - (numeratorEval * denominatorDerived)) 
+        / (denominatorEval * denominatorEval);
+}
+
 float Division::eval(std::map<Variable*, float> interpretation) {
     return numerator->eval(interpretation) / denominator->eval(interpretation);
 }

@@ -37,6 +37,8 @@ void ExpressionDemo() {
     Variable v2("B");
     Division d(&v1, &v2);
     Addition a(&d, &v2);
+    Constant c(7);
+    Power p(&v1, &c);
 
     std::map<Variable*, float> interpretation;
     interpretation[&v1] = 3;
@@ -49,7 +51,7 @@ void ExpressionDemo() {
         std::cout << v->to_string() << std::endl;
     }
 
-    std::cout << a.eval(interpretation) << std::endl;
+    std::cout << p.partialAndEval(&v1, interpretation) << std::endl;
 }
 
 int main() {
