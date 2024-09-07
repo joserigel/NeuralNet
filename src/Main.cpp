@@ -35,15 +35,21 @@ void LinearRegressionDemo() {
 void ExpressionDemo() {
     Variable v1("A");
     Variable v2("B");
-    Division a(&v1, &v2);
-    Multiplication m(&a, &v2);
+    Division d(&v1, &v2);
+    Addition a(&d, &v2);
 
-    std::cout << m.to_string() << std::endl;
+    std::map<Variable*, float> interpretation;
+    interpretation[&v1] = 3;
+    interpretation[&v2] = 5;
 
-    std::set<Variable*> test = m.getVariables();
+    std::cout << a.to_string() << std::endl;
+
+    std::set<Variable*> test = a.getVariables();
     for (Variable* v: test) {
         std::cout << v->to_string() << std::endl;
     }
+
+    std::cout << a.eval(interpretation) << std::endl;
 }
 
 int main() {

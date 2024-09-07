@@ -15,3 +15,7 @@ std::set<Variable*> Power::getVariables() {
     a.insert(b.begin(), b.end());
     return a;
 }
+
+float Power::eval(std::map<Variable*, float> interpretation) {
+    return std::pow(base->eval(interpretation), exponent->eval(interpretation));
+}

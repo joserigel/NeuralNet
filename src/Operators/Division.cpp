@@ -15,3 +15,7 @@ std::set<Variable*> Division::getVariables() {
     a.insert(b.begin(), b.end());
     return a;
 }
+
+float Division::eval(std::map<Variable*, float> interpretation) {
+    return numerator->eval(interpretation) / denominator->eval(interpretation);
+}

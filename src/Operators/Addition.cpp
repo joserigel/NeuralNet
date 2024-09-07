@@ -15,3 +15,7 @@ std::set<Variable*> Addition::getVariables() {
     a.insert(b.begin(), b.end());
     return a;
 }
+
+float Addition::eval(std::map<Variable*, float> interpretation) {
+    return left->eval(interpretation) + right->eval(interpretation);
+}

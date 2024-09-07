@@ -15,3 +15,7 @@ std::set<Variable*> Multiplication::getVariables() {
     a.insert(b.begin(), b.end());
     return a;
 }
+
+float Multiplication::eval(std::map<Variable*, float> interpretation) {
+    return left->eval(interpretation) * right->eval(interpretation);
+}
