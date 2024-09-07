@@ -1,9 +1,10 @@
 #include "Layers/Linear.h"
 #include "Layers/Sequential.h"
+#include "Operators/Expression.h"
 #include <iostream>
 #include <string>
 
-int main() {
+void LinearRegressionDemo() {
     Linear linear(1, 1);
 
     // Input initialize
@@ -18,7 +19,6 @@ int main() {
     float decay = 1;
     for (unsigned int epoch = 0; epoch < 3000; epoch++) {
         linear.train(inputs, labels, 0.02);
-        
     }
 
 
@@ -26,10 +26,26 @@ int main() {
     l.push_back(&linear);
     l.push_back(&linear);
     
-    
 
     Sequential sequential(l);
     std::cout << linear.to_string();
     std::cout << sequential.feed(std::vector<float>(1, 1))[0] << std::endl;
+}
+
+void ExpressionDemo() {
+    Variable v1("A");
+    Variable v2("B");
+    Division a(&v1, &v2);
+
+    std::cout << a.to_string() << std::endl;
+
+    std::set<std::string> test = a.getVariables();
+    for (std::string str: test) {
+        std::cout << str << std::endl;
+    }
+}
+
+int main() {
+    ExpressionDemo();
     return 0;
 }

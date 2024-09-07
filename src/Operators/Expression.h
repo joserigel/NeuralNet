@@ -1,48 +1,72 @@
+#ifndef Expression_H
+#define Expression_H
+
 #include <string>
 #include <set>
 
 class Expression {
     public:
-        std::set<string> getVariables();
-}
+        virtual std::set<std::string> getVariables() = 0;
+        virtual std::string to_string() = 0;
+};
 
 class Variable: public Expression {
     private:
-        string name;
+        std::string name;
     public:
-        Variable(string name);
-}
+        std::set<std::string> getVariables() override;
+        std::string to_string() override;
+        Variable(std::string name);
+};
+
+class Constant: public Expression {
+    private:
+        float value;
+    public:
+        std::set<std::string> getVariables() override;
+        std::string to_string() override;
+        Constant(float value);
+};
 
 class Addition: public Expression {
     private:
-        Expression left;
-        Expression right;
+        Expression* left;
+        Expression* right;
     public:
-        Addition(Expression left, Expression right);
+        std::set<std::string> getVariables() override;
+        std::string to_string() override;
+        Addition(Expression* left, Expression* right);
 
-}
+};
 
 class Multiplication: public Expression {
     private:
-        Expression left;
-        Expression right;
+        Expression* left;
+        Expression* right;
     public:
-        Multiplication(Expression left, Expression right);
-}
+        std::set<std::string> getVariables() override;
+        std::string to_string() override;
+        Multiplication(Expression* left, Expression* right);
+};
 
 class Division: public Expression {
     private:
-        Expression numerator;
-        Expression denominator;
+        Expression* numerator;
+        Expression* denominator;
     public:
-        Division(Expression numerator, Expression denominator);
-
-}
+        std::set<std::string> getVariables() override;
+        std::string to_string() override;
+        Division(Expression* numerator, Expression* denominator);
+};
 
 class Power: public Expression {
     private:
-        Expression base;
-        Expression exponent;
+        Expression* base;
+        Expression* exponent;
     public:
-        Power(Expression base, Expression exponent);
-}
+        std::set<std::string> getVariables() override;
+        std::string to_string() override;
+        Power(Expression* base, Expression* exponent);
+};
+
+#endif

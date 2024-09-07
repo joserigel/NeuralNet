@@ -1,6 +1,4 @@
-#ifndef Layer_H
-    #include "Layer.h"
-#endif
+#include "Layer.h"
 
 #include <vector>
 #include <string>
