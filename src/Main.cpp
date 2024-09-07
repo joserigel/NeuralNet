@@ -36,10 +36,11 @@ void ExpressionDemo() {
     Variable v1("A");
     Variable v2("B");
     Division a(&v1, &v2);
+    Multiplication m(&a, &v2);
 
-    std::cout << a.to_string() << std::endl;
+    std::cout << m.to_string() << std::endl;
 
-    std::set<Variable*> test = a.getVariables();
+    std::set<Variable*> test = m.getVariables();
     for (Variable* v: test) {
         std::cout << v->to_string() << std::endl;
     }

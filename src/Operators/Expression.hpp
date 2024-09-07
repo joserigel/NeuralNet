@@ -10,6 +10,7 @@ class Expression {
     public:
         virtual std::set<Variable*> getVariables() = 0;
         virtual std::string to_string() = 0;
+        // virtual Expression partial(Variable var) = 0;
 };
 
 class Variable: public Expression {
