@@ -1,4 +1,4 @@
-#include "Expression.h"
+#include "Expression.hpp"
 
 Variable::Variable(std::string name) {
     this->name = name;
@@ -8,9 +8,9 @@ std::string Variable::to_string() {
     return name;
 }
 
-std::set<std::string> Variable::getVariables() {
-    std::set<std::string> res;
-    res.insert(this->name);
+std::set<Variable*> Variable::getVariables() {
+    std::set<Variable*> res;
+    res.insert(this);
     return res;
 }
 
@@ -22,6 +22,6 @@ std::string Constant::to_string() {
     return std::to_string(value);
 }
 
-std::set<std::string> Constant::getVariables() {
-    return std::set<std::string>();
+std::set<Variable*> Constant::getVariables() {
+    return std::set<Variable*>();
 }

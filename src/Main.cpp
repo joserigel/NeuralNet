@@ -1,6 +1,6 @@
 #include "Layers/Linear.h"
 #include "Layers/Sequential.h"
-#include "Operators/Expression.h"
+#include "Operators/Expression.hpp"
 #include <iostream>
 #include <string>
 
@@ -39,9 +39,9 @@ void ExpressionDemo() {
 
     std::cout << a.to_string() << std::endl;
 
-    std::set<std::string> test = a.getVariables();
-    for (std::string str: test) {
-        std::cout << str << std::endl;
+    std::set<Variable*> test = a.getVariables();
+    for (Variable* v: test) {
+        std::cout << v->to_string() << std::endl;
     }
 }
 

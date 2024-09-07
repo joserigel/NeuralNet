@@ -1,4 +1,4 @@
-#include "Expression.h"
+#include "Expression.hpp"
 
 Power::Power(Expression* base, Expression* exponent) {
     this->base = base;
@@ -9,9 +9,9 @@ std::string Power::to_string() {
     return base->to_string() + "^" + exponent->to_string();
 }
 
-std::set<std::string> Power::getVariables() {
-    std::set<std::string> a = base->getVariables();
-    std::set<std::string> b = exponent->getVariables();
+std::set<Variable*> Power::getVariables() {
+    std::set<Variable*> a = base->getVariables();
+    std::set<Variable*> b = exponent->getVariables();
     a.insert(b.begin(), b.end());
     return a;
 }
