@@ -16,14 +16,6 @@ class Optimizer {
             ) = 0;
 };
 
-class SGD: public Optimizer {
-    public:
-        void train(
-            Layer* model, 
-            Loss* loss,
-            std::vector<std::vector<float>> inputs,
-            std::vector<std::vector<float>> labels
-            ) override;
-}
+
 
 #endif

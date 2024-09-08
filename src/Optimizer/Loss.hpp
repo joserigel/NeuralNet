@@ -1,9 +1,27 @@
 #ifndef Loss_HPP
 #define Loss_HPP
 
+#include "../Operators/Expression.hpp"
+#include "../Layers/Layer.hpp"
+
+#include <vector>
+
 class Loss {
-    protected:
-        Expression* expression;
-}
+    public:
+        virtual Expression* calculate(
+            Layer* model, 
+            std::vector<std::vector<float>> inputs, 
+            std::vector<std::vector<float>> labels
+            ) = 0;
+};
+
+class MeanSquaredError : public Loss {
+    public:
+        Expression* calculate(
+            Layer* model, 
+            std::vector<std::vector<float>> inputs, 
+            std::vector<std::vector<float>> labels
+            ) override;
+};
 
 #endif
