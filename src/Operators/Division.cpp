@@ -1,9 +1,7 @@
 #include "Expression.hpp"
 
-Division::Division(Expression* numerator, Expression* denominator) {
-    this->numerator = numerator;
-    this->denominator = denominator;
-}
+Division::Division(std::shared_ptr<Expression> numerator, std::shared_ptr<Expression> denominator):
+    numerator(numerator), denominator(denominator) {}
 
 std::string Division::to_string() {
     return numerator->to_string() + "/" + denominator->to_string();
@@ -29,6 +27,6 @@ float Division::eval(std::map<Variable*, float> interpretation) {
     return numerator->eval(interpretation) / denominator->eval(interpretation);
 }
 
-Expression* Division::replace(Variable* var, Expression* substitute) {
-    return new Division(numerator->replace(var, substitute), denominator->replace(var, substitute));
+std::shared_ptr<Expression> Division::replace(Variable* var, std::shared_ptr<Expression> substitute) {
+    return std::shared_ptr<Expression>(new Division(numerator->replace(var, substitute), denominator->replace(var, substitute)));
 }

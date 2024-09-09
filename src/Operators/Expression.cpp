@@ -1,8 +1,6 @@
 #include "Expression.hpp"
 
-Variable::Variable(std::string name) {
-    this->name = name;
-}
+Variable::Variable(std::string name): name(name) {}
 
 std::string Variable::to_string() {
     return name;
@@ -30,11 +28,11 @@ float Variable::partialAndEval(Variable* var, std::map<Variable*, float> interpr
     }
 }
 
-Expression* Variable::replace(Variable* var, Expression* substitute) {
+std::shared_ptr<Expression> Variable::replace(Variable* var, std::shared_ptr<Expression> substitute) {
     if (var == this) {
         return substitute;
     } else {
-        return this;
+        return std::shared_ptr<Expression>(this);
     }
 }
 
@@ -58,6 +56,6 @@ float Constant::eval(std::map<Variable*, float> interpretation) {
     return this->value;
 }
 
-Expression* Constant::replace(Variable* var, Expression* substitute) {
-    return new Constant(this->value);
+std::shared_ptr<Expression> Constant::replace(Variable* var, std::shared_ptr<Expression> substitute) {
+    return std::shared_ptr<Expression>(new Constant(this->value));
 }

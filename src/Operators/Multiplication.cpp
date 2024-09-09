@@ -1,8 +1,7 @@
 #include "Expression.hpp"
 
-Multiplication::Multiplication(Expression* left, Expression* right) {
-    this->left = left;
-    this->right = right;
+Multiplication::Multiplication(std::shared_ptr<Expression> left, std::shared_ptr<Expression> right)
+    : left(left), right(right) {
 }
 
 std::string Multiplication::to_string() {
@@ -28,6 +27,6 @@ float Multiplication::eval(std::map<Variable*, float> interpretation) {
     return left->eval(interpretation) * right->eval(interpretation);
 }
 
-Expression* Multiplication::replace(Variable* var, Expression* substitute) {
-    return new Multiplication(left->replace(var, substitute), right->replace(var, substitute));
+std::shared_ptr<Expression> Multiplication::replace(Variable* var, std::shared_ptr<Expression> substitute) {
+    return std::shared_ptr<Expression>(new Multiplication(left->replace(var, substitute), right->replace(var, substitute)));
 }

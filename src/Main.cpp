@@ -5,31 +5,21 @@
 
 void LinearRegressionDemo() {
     Linear linear(3, 3);
-
     // Input initialize
     std::cout << linear.to_string() << std::endl;
 }
 
 void ExpressionDemo() {
-    Variable v1("A");
-    Variable v2("B");
-    Division d(&v1, &v2);
-    Addition a(&d, &v2);
-    Constant c(1.0f/3.0f);
-    Power p(&v1, &c);
+    std::shared_ptr<Variable> A(new Variable("A"));
+    std::shared_ptr<Variable> B(new Variable("B"));
 
+    std::shared_ptr<Expression> D(new Division(A, B));
     std::map<Variable*, float> interpretation;
-    interpretation[&v1] = 8;
-    interpretation[&v2] = 5;
+    interpretation[A.get()] = 1;
+    interpretation[B.get()] = 5;
 
-    std::cout << a.to_string() << std::endl;
-
-    std::set<Variable*> test = a.getVariables();
-    for (Variable* v: test) {
-        std::cout << v->to_string() << std::endl;
-    }
-
-    std::cout << p.eval(interpretation) << std::endl;
+    std::cout << D->eval(interpretation) << std::endl;
+    std::cout << D->partialAndEval(B.get(), interpretation) << std::endl;
 }
 
 int main() {

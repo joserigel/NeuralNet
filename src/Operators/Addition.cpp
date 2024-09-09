@@ -1,8 +1,7 @@
 #include "Expression.hpp"
 
-Addition::Addition(Expression* left, Expression* right) {
-    this->left = left;
-    this->right = right;
+Addition::Addition(std::shared_ptr<Expression> left, std::shared_ptr<Expression> right):
+    left(left), right(right) {
 }
 
 std::string Addition::to_string() {
@@ -24,6 +23,6 @@ float Addition::eval(std::map<Variable*, float> interpretation) {
     return left->eval(interpretation) + right->eval(interpretation);
 }
 
-Expression* Addition::replace(Variable* var, Expression* substitute) {
-    return new Addition(left->replace(var, substitute), right->replace(var, substitute));
+std::shared_ptr<Expression> Addition::replace(Variable* var, std::shared_ptr<Expression> substitute) {
+    return std::shared_ptr<Expression>(new Addition(left->replace(var, substitute), right->replace(var, substitute)));
 }

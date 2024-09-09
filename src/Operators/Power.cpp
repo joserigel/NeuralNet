@@ -1,9 +1,7 @@
 #include "Expression.hpp"
 
-Power::Power(Expression* base, Expression* exponent) {
-    this->base = base;
-    this->exponent = exponent;
-}
+Power::Power(std::shared_ptr<Expression> base, std::shared_ptr<Expression> exponent):
+    base(base), exponent(exponent) {}
 
 std::string Power::to_string() {
     return base->to_string() + "^" + exponent->to_string();
@@ -29,6 +27,6 @@ float Power::eval(std::map<Variable*, float> interpretation) {
     return std::pow(base->eval(interpretation), exponent->eval(interpretation));
 }
 
-Expression* Power::replace(Variable* var, Expression* substitute) {
-    return new Power(base->replace(var, substitute), exponent->replace(var, substitute));
+std::shared_ptr<Expression> Power::replace(Variable* var, std::shared_ptr<Expression> substitute) {
+    return std::shared_ptr<Expression>(new Power(base->replace(var, substitute), exponent->replace(var, substitute)));
 }
