@@ -15,6 +15,7 @@ Linear::Linear(unsigned int input, unsigned int output) {
 
     inputs = input;
     outputs = output;
+    weightCount = (input + 1) * output;
 
     // Initialize variables
     for (unsigned int in = 0; in < input; in++) {
@@ -35,7 +36,7 @@ Linear::Linear(unsigned int input, unsigned int output) {
 
         //Prepare expressions
         std::shared_ptr<Expression> exp(bias);
-        for (unsigned int in = 0; in < input; in++) {
+        for (long int in = input - 1; in >= 0; in--) {
             std::shared_ptr<Expression> weight = weights[(out * (input + 1)) + in];
             std::shared_ptr<Expression> var = variables[in];
             
@@ -45,4 +46,8 @@ Linear::Linear(unsigned int input, unsigned int output) {
         }
         expressions[out] = exp;
     }
+}
+
+void Layer::updateWeight(unsigned int index, float newWeight) {
+    weightValues[index] = newWeight;
 }

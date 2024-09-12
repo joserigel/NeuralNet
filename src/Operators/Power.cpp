@@ -27,6 +27,6 @@ float Power::eval(std::map<Variable*, float> interpretation) {
     return std::pow(base->eval(interpretation), exponent->eval(interpretation));
 }
 
-std::shared_ptr<Expression> Power::replace(Variable* var, std::shared_ptr<Expression> substitute) {
+std::shared_ptr<Expression> Power::replace(std::shared_ptr<Variable> var, std::shared_ptr<Expression> substitute) {
     return std::shared_ptr<Expression>(new Power(base->replace(var, substitute), exponent->replace(var, substitute)));
 }

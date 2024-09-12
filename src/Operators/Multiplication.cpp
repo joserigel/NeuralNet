@@ -27,6 +27,6 @@ float Multiplication::eval(std::map<Variable*, float> interpretation) {
     return left->eval(interpretation) * right->eval(interpretation);
 }
 
-std::shared_ptr<Expression> Multiplication::replace(Variable* var, std::shared_ptr<Expression> substitute) {
+std::shared_ptr<Expression> Multiplication::replace(std::shared_ptr<Variable> var, std::shared_ptr<Expression> substitute) {
     return std::shared_ptr<Expression>(new Multiplication(left->replace(var, substitute), right->replace(var, substitute)));
 }

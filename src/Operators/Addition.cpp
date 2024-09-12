@@ -23,6 +23,6 @@ float Addition::eval(std::map<Variable*, float> interpretation) {
     return left->eval(interpretation) + right->eval(interpretation);
 }
 
-std::shared_ptr<Expression> Addition::replace(Variable* var, std::shared_ptr<Expression> substitute) {
+std::shared_ptr<Expression> Addition::replace(std::shared_ptr<Variable> var, std::shared_ptr<Expression> substitute) {
     return std::shared_ptr<Expression>(new Addition(left->replace(var, substitute), right->replace(var, substitute)));
 }

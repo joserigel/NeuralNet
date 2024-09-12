@@ -8,7 +8,7 @@
 
 class Loss {
     public:
-        virtual Expression* calculate(
+        virtual std::shared_ptr<Expression> calculate(
             Layer* model, 
             std::vector<std::vector<float>> inputs, 
             std::vector<std::vector<float>> labels
@@ -17,7 +17,7 @@ class Loss {
 
 class MeanSquaredError : public Loss {
     public:
-        Expression* calculate(
+        std::shared_ptr<Expression> calculate(
             Layer* model, 
             std::vector<std::vector<float>> inputs, 
             std::vector<std::vector<float>> labels

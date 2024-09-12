@@ -27,6 +27,6 @@ float Division::eval(std::map<Variable*, float> interpretation) {
     return numerator->eval(interpretation) / denominator->eval(interpretation);
 }
 
-std::shared_ptr<Expression> Division::replace(Variable* var, std::shared_ptr<Expression> substitute) {
+std::shared_ptr<Expression> Division::replace(std::shared_ptr<Variable> var, std::shared_ptr<Expression> substitute) {
     return std::shared_ptr<Expression>(new Division(numerator->replace(var, substitute), denominator->replace(var, substitute)));
 }
