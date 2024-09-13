@@ -20,10 +20,8 @@ void LinearRegressionDemo() {
     SGD sgd;
     MeanSquaredError mse;
     for (unsigned int epoch = 0; epoch < 1000; epoch++) {
-        sgd.train(&linear, &mse, inputs, labels);
+        sgd.train(&linear, &mse, &inputs, &labels);
     }
-
-    std::cout << linear.to_string();
 }
 
 int main() {

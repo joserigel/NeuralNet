@@ -11,8 +11,8 @@ class Optimizer {
         virtual void train(
             Layer* model, 
             Loss* loss,
-            std::vector<std::vector<float>> inputs,
-            std::vector<std::vector<float>> labels
+            std::vector<std::vector<float>>* inputs,
+            std::vector<std::vector<float>>* labels
             ) = 0;
 };
 
