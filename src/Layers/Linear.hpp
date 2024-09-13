@@ -3,5 +3,5 @@
 
 class Linear: public Layer {
     public:
-        Linear(unsigned int input, unsigned int output);
+        Linear(unsigned int inputs, unsigned int outputs);
 };

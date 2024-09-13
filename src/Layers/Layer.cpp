@@ -1,35 +1,39 @@
 #include "Layer.hpp"
 
-std::string Layer::to_string() {
-    std::string result = "";
-    for (int i = 0; i < getOutputSize(); i++) {
-        result += expressions[i]->to_string() + "\n";
-    }
-    return result;
-}
+Layer::Layer(
+    unsigned int inputs,
+    unsigned int outputs,
+    unsigned int weights
+    ) {
+    // Initialize data members
+    this->variables = new std::shared_ptr<Variable>[inputs];
+    this->weights = new std::shared_ptr<Variable>[weights];
+    this->expressions = new std::shared_ptr<Expression>[outputs];
 
-std::vector<float> Layer::feed(std::vector<float> input) {
-    if (getInputSize() != input.size()) {
-        throw std::invalid_argument("input size mismatch!");
-    }
-
-    std::map<Variable*, float> interpretation;
-    
-    for (unsigned int i = 0; i < input.size(); i++) {
-        interpretation[variables[i].get()] = input[i];
+    // Initialize variables
+    for (unsigned int in = 0; in < inputs; in++) {
+        this->variables[in] = std::shared_ptr<Variable>(new Variable("x_" + std::to_string(in)));       
     }
 
-    std::vector<float> result;
-    for (unsigned int i = 0; i < getOutputSize(); i++) {
-        result.push_back(expressions[i].get()->eval(interpretation));
+    // Initialize weights
+    for (unsigned int w = 0; w < weights; w++) {
+        this->weights[w] = std::shared_ptr<Variable>(new Variable("w_" + std::to_string(w)));
     }
-    return result;
+
+    // Initialize weight values
+    for (unsigned int i = 0; i < weights; i++) {
+        weightValues[this->weights[i].get()] = 1;
+    }
+
+    // Save arguments
+    this->inputs = inputs;
+    this->outputs = outputs;
+    this->weightCount = weights;
 }
 
 Layer::~Layer() {
     delete[] variables;
     delete[] weights;
-    delete[] weightValues;
     delete[] expressions;
 }
 
@@ -59,10 +63,34 @@ std::vector<std::shared_ptr<Expression>> Layer::getExpressions() {
     );
 }
 
-std::vector<float> Layer::getWeightValues() {
-    return std::vector<float>(
-        weightValues, weightValues + weightCount
-    );
+std::map<Variable*, float> Layer::getWeightValues() {
+    return weightValues;
+}
+
+std::string Layer::to_string() {
+    std::string result = "";
+    for (int i = 0; i < getOutputSize(); i++) {
+        result += expressions[i]->to_string() + "\n";
+    }
+    return result;
+}
+
+std::vector<float> Layer::feed(std::vector<float> input) {
+    if (getInputSize() != input.size()) {
+        throw std::invalid_argument("input size mismatch!");
+    }
+
+    std::map<Variable*, float> interpretation;
+    
+    for (unsigned int i = 0; i < input.size(); i++) {
+        interpretation[variables[i].get()] = input[i];
+    }
+
+    std::vector<float> result;
+    for (unsigned int i = 0; i < getOutputSize(); i++) {
+        result.push_back(expressions[i].get()->eval(interpretation));
+    }
+    return result;
 }
 
 std::vector<std::shared_ptr<Expression>> Layer::bakeInputToExpressions(std::vector<float> input) {
@@ -82,4 +110,8 @@ std::vector<std::shared_ptr<Expression>> Layer::bakeInputToExpressions(std::vect
         result.push_back(exp);
     }
     return result;
+}
+
+void Layer::setWeight(Variable* var, float newValue) {
+    weightValues[var] = newValue;
 }

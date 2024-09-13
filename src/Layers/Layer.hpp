@@ -11,7 +11,7 @@ class Layer {
     protected:
         std::shared_ptr<Variable>* variables;
         std::shared_ptr<Variable>* weights;
-        float* weightValues;
+        std::map<Variable*, float> weightValues;
         std::shared_ptr<Expression>* expressions;
         unsigned int inputs;
         unsigned int weightCount;
@@ -24,9 +24,10 @@ class Layer {
         std::vector<std::shared_ptr<Variable>> getVariables();
         std::vector<std::shared_ptr<Variable>> getWeights();
         std::vector<std::shared_ptr<Expression>> getExpressions();
-        std::vector<float> getWeightValues();
         std::vector<std::shared_ptr<Expression>> bakeInputToExpressions(std::vector<float> input);
-        void updateWeight(unsigned int index, float newWeight);
+        std::map<Variable*, float> getWeightValues();
+        void setWeight(Variable* var, float newValue);
+        Layer(unsigned int inputs, unsigned int outputs, unsigned int weights);
         ~Layer();
 };
 
