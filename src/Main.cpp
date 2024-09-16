@@ -7,8 +7,8 @@
 
 void LinearRegressionDemo() {
     std::vector<std::vector<float>> inputs = {
-        {1, 2, 3},
-        {3, 4, 5}
+        {1, 2},
+        {3, 2}
     };
 
     std::vector<std::vector<float>> labels = {
@@ -16,12 +16,25 @@ void LinearRegressionDemo() {
         {3, 2}
     };
 
-    Linear linear(3, 2);
+    Linear linear(2, 2);
     SGD sgd;
     MeanSquaredError mse;
-    for (unsigned int epoch = 0; epoch < 1000; epoch++) {
+    sgd.learningRate = 0.001;
+    std::cout << linear.to_string();
+    
+    for (unsigned int epoch = 0; epoch < 5000; epoch++) {
         sgd.train(&linear, &mse, &inputs, &labels);
+
+
+        for (std::shared_ptr<Variable> var: linear.getWeights()) {
+            std::cout << var->to_string() << ": " << linear.getWeightValues()[var.get()] << std::endl;
+        }
     }
+
+
+    std::cout << mse.calculate(&linear, &inputs, &labels)->to_string() << std::endl;
+
+    std::cout << linear.feed(inputs[0])[0] << " " << linear.feed(inputs[0])[1] << std::endl;
 }
 
 int main() {

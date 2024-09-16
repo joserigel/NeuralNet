@@ -59,6 +59,20 @@ class Addition: public Expression {
 
 };
 
+class Subtraction: public Expression {
+    private:
+        std::shared_ptr<Expression> left;
+        std::shared_ptr<Expression> right;
+    public:
+        std::set<Variable*> getVariables() override;
+        std::string to_string() override;
+        float partialAndEval(Variable* var, std::map<Variable*, float> interpretation) override;
+        float eval(std::map<Variable*, float> interpretation) override;
+        std::shared_ptr<Expression> replace(std::shared_ptr<Variable> var, std::shared_ptr<Expression> substitute) override;
+        Subtraction(std::shared_ptr<Expression> left, std::shared_ptr<Expression> right);
+
+};
+
 class Multiplication: public Expression {
     private:
         std::shared_ptr<Expression> left;

@@ -1,37 +1,61 @@
 #include "Loss.hpp"
 
+
+std::shared_ptr<Expression> perRowLoss(
+    Layer* model,
+    std::vector<float> input, 
+    std::vector<float> label
+    ) {
+    std::shared_ptr<Expression> result = 0;
+    std::vector<std::shared_ptr<Expression>> bakedExpression 
+        = model->bakeInputToExpressions(input);
+
+    std::shared_ptr<Expression> sum = 0;
+    for (unsigned int j = 0; j < bakedExpression.size(); j++) {
+        std::shared_ptr<Expression> labelFeature(new Constant(label[j]));
+        std::shared_ptr<Expression> difference(new Subtraction(bakedExpression[j], labelFeature));
+        std::shared_ptr<Expression> squared(new Multiplication(difference, difference));
+        
+        if (sum) {
+            std::shared_ptr<Expression> add(new Addition(sum, squared));
+            sum.swap(add);
+        } else {
+            sum.swap(squared);
+        }
+    }
+    return sum;
+}
+
+
+
 std::shared_ptr<Expression> MeanSquaredError::calculate(
     Layer* model,
     std::vector<std::vector<float>>* inputs, 
     std::vector<std::vector<float>>* labels
     ) {
-        std::shared_ptr<Expression> res;
-        for (unsigned int i = 0; i < inputs->size(); i++) {
-            std::vector<std::shared_ptr<Expression>> baked =
-                model->bakeInputToExpressions((*inputs)[i]);
-            std::shared_ptr<Expression> sum;
-            for (unsigned int j = 0; j < baked.size(); j++) {
-                std::shared_ptr<Constant> label(new Constant(-1 * (*labels)[i][j]));
-                std::shared_ptr<Expression> add(new Addition(baked[0], label));
-                std::shared_ptr<Expression> exponent(new Multiplication(add, add));
-                
-                if (j == 0) {
-                    sum.swap(exponent);
-                } else {
-                    std::shared_ptr<Expression> clause(new Addition(exponent, sum));
-                    sum.swap(clause);
-                }
-            }
-
-            if (i == 0) {
-                res.swap(sum);
-            } else {
-                std::shared_ptr<Expression> clause(new Addition(res, sum));
-                res.swap(clause);
-            }
+        if (inputs->size() == 0 || labels->size() == 0) {
+            throw std::invalid_argument("inputs and labels must be bigger than 0!");
         }
-        std::shared_ptr<Expression> batchSize(new Constant(inputs->size()));
-        std::shared_ptr<Expression> divide(new Division(res, batchSize));
+
+        if (inputs->size() != labels->size()) {
+            throw std::invalid_argument("inputs and labels size mismatch!");
+        }
+
+
+        std::shared_ptr<Expression> result = perRowLoss(
+            model,
+            (*inputs)[0],
+            (*labels)[0]
+        );
+        for (unsigned int i = 1; i < inputs->size(); i++) {
+            std::shared_ptr<Expression> add(new Addition(
+                perRowLoss(model, (*inputs)[i], (*labels)[i]),
+                result
+                ));
+            result.swap(add);
+        }
+
+        std::shared_ptr<Expression> rowCount(new Constant(inputs->size()));
+        std::shared_ptr<Expression> divide(new Division(result, rowCount));
         return divide;
-        
 }

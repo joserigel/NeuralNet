@@ -22,7 +22,7 @@ Layer::Layer(
 
     // Initialize weight values
     for (unsigned int i = 0; i < weights; i++) {
-        weightValues[this->weights[i].get()] = 1;
+        weightValues[this->weights[i].get()] = 0;
     }
 
     // Save arguments
@@ -80,7 +80,7 @@ std::vector<float> Layer::feed(std::vector<float> input) {
         throw std::invalid_argument("input size mismatch!");
     }
 
-    std::map<Variable*, float> interpretation;
+    std::map<Variable*, float> interpretation = getWeightValues();
     
     for (unsigned int i = 0; i < input.size(); i++) {
         interpretation[variables[i].get()] = input[i];
