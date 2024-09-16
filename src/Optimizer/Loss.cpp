@@ -14,7 +14,8 @@ std::shared_ptr<Expression> perRowLoss(
     for (unsigned int j = 0; j < bakedExpression.size(); j++) {
         std::shared_ptr<Expression> labelFeature(new Constant(label[j]));
         std::shared_ptr<Expression> difference(new Subtraction(bakedExpression[j], labelFeature));
-        std::shared_ptr<Expression> squared(new Multiplication(difference, difference));
+        std::shared_ptr<Expression> exponent(new Constant(2));
+        std::shared_ptr<Expression> squared(new Power(difference, exponent));
         
         if (sum) {
             std::shared_ptr<Expression> add(new Addition(sum, squared));

@@ -19,18 +19,12 @@ void LinearRegressionDemo() {
     Linear linear(2, 2);
     SGD sgd;
     MeanSquaredError mse;
-    sgd.learningRate = 0.001;
+    sgd.learningRate = 0.03;
     std::cout << linear.to_string();
     
-    for (unsigned int epoch = 0; epoch < 5000; epoch++) {
+    for (unsigned int epoch = 0; epoch < 500; epoch++) {
         sgd.train(&linear, &mse, &inputs, &labels);
-
-
-        for (std::shared_ptr<Variable> var: linear.getWeights()) {
-            std::cout << var->to_string() << ": " << linear.getWeightValues()[var.get()] << std::endl;
-        }
     }
-
 
     std::cout << mse.calculate(&linear, &inputs, &labels)->to_string() << std::endl;
 

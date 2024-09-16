@@ -20,7 +20,13 @@ float Power::partialAndEval(Variable* var, std::map<Variable*, float> interpreta
     const float baseEval = base->eval(interpretation);
     const float a = exponentDerivedEval * std::log(baseEval);
     const float b = baseDerivedEval * (exponent->eval(interpretation) / baseEval);
-    return this->eval(interpretation) * (a + b);
+
+    if (exponentDerivedEval != 0) {
+        return this->eval(interpretation) * (a + b);
+    } else {
+        return this->eval(interpretation) * (b);
+    }
+    
 }
 
 float Power::eval(std::map<Variable*, float> interpretation) {
