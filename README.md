@@ -1,5 +1,5 @@
 # NeuralNet
-Neural Network from scratch using c++
+Neural Network from scratch using c++. This project aims to create an explainable framework of machine learning components. This uses (symbolic, adjoint) automatic differentiation for defining architectures using object oriented classes of operations.
 
 ### How to build and run (CMake)
 Initially run
